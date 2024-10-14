@@ -1,0 +1,43 @@
+html {
+    height: 100%;
+    /* margin: 0;
+    padding: 0; */
+    width: 100%;
+    background-image: url(../img/fondo.jpg);
+    background-size: cover;
+    background-position: center;
+}
+#contenido {
+    background-color: rgba(250, 235, 215, 0.8); 
+    color: rgb(22, 20, 20); 
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#cartas {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#cartas img {
+    margin: 0 10px;
+    max-width: 150px;
+}
+
+form {
+    margin-top: 20px;
+    text-align: center;
+    background-color: antiquewhite;
+}
+
+select, button {
+    font-size: 1rem;
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(86, 119, 147);
+}
+
+button:hover, select:hover {
+    background-color: rgb(122, 148, 171);
+}
