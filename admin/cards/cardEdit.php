@@ -67,5 +67,5 @@
 
         <input type="submit" value="Actualizar Carta">
     </form>
-</body>
-</html>
+    
+<?php include_once '../footer.php'; ?>

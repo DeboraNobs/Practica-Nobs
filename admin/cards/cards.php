@@ -3,7 +3,7 @@
 
     $conexion = (new Conexion())->get_conexion();
 
-    if ($conexion) { // Si la conexión es exitosa..
+    if ($conexion) {    // si la conexión es exitosa..
         $cartaBD = new CartaBD($conexion);
         $cartas = $cartaBD->obtenerCartas();
     } else {
@@ -19,27 +19,8 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Cartas</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-    <header>
-        <h1>Panel de Administración</h1>
-        <nav>
-            <ul>
-            <li><a href="../dashboard.php">Inicio</a></li>
-                <li><a href="users.php">Usuarios</a></li>
-                <li><a href="./cards/cards.php">Cartas</a></li>
-                <li><a href="../config/configuracion.php">Configuración</a></li>
-                <li><a href="../logout.php">Cerrar Sesión</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php include_once '../header.php'; ?>
+
     <h1>Gestión de Cartas</h1>
     <a href="cardAdd.php">Añadir Carta</a>
     <p>Numero de cartas: </p>
@@ -72,5 +53,5 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</body>
-</html>
+
+<?php include_once '../footer.php'; ?>

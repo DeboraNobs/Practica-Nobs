@@ -7,48 +7,61 @@
     <link rel="stylesheet" href="./assets/css/admin.css">
 </head>
 <body>
+
 <?php 
     require_once '../models/UsuarioBD.php'; 
-    $conexion = (new Conexion())->get_conexion();  // Obtener la conexión
+    session_start();
+    $usuarioBD = new UsuarioBD();
 
-    $mensajeError = null;
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['entrar'])) { // si llega por post y ha clickado en el botón entrar
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $usuario = $_POST['username'];
-        $password = $_POST['password'];
+        if (!empty($_POST['email']) && !empty($_POST['password'])) { // si se ha completado el email y el password
+            $email = $_POST['email'];                         // toma los datos $email y $password que ha puesto el cliente
+            $password = $_POST['password'];
 
-        $passwordEncriptada = sha1($password);
-
-        $query = "SELECT * FROM usuarios WHERE nickname = :nickname AND password = :password";
-        $statement = $conexion->prepare($query);
-        $statement->bindParam(':nickname', $usuario);
-        $statement->bindParam(':password', $passwordEncriptada);
-        
-        if ($statement->execute()) { // si la ejecución es true
-            if ($statement->rowCount() > 0) { // y si devuelve al menos una fila me redirige a dashboard.php
-                header("Location: dashboard.php");
-                exit;
-            } else {
-                $mensajeError = "Usuario o contraseña incorrectos.";
-                echo $mensajeError;
-            }
-        } else {
-            $mensajeError = "Error al ejecutar la consulta.";
-            echo $mensajeError;
+            $usuarioBD->validarLogin($email, $password);        // uso $email y $password para validar si existe el usuario en la BBDD
+   
+            if (isset($_POST['recordar'])) {                   // si el cliente le da al checkbox "recordar" creará dos coockies, (user y logged)
+                setcookie('user', $email, time() + (86400 * 30), "/");  // guarda el user con el => email
+                setcookie('logged', true, time() + (86400 * 30), "/");  
+            } 
         }
     }
+
+    if (isset($_GET['logout']) == 1) {   // si se hace logout se borran las variables de sesión y logged se hace false.
+        $_SESSION['user'] = ""; 
+        $_SESSION['logged'] = false;
+        $_SESSION['email'] = "";
+
+        setcookie('user', '', time() - 3600, "/");   // y se setean la cookie 'user' a vacía.
+        setcookie('logged', false, time() - 3600, "/");  // se setea la cookie 'logged' a false.
+
+        session_unset();   // vacío las variables de sesión
+        session_destroy(); // destruyo las variables de sesión para que no existan más en memoria
+        header("Location: login.php"); 
+        exit;
+    }
+
+    echo "<pre>Variables de sesión actuales: ";
+    print_r($_SESSION);
+    echo "</pre>";
 ?>
     <div class="login-container">
         <form action="" method="POST" class="login-form">
             <h2>Iniciar Sesión</h2>
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" required>
+            <label for="email">Usuario:</label>
+            <input type="text" id="email" name="email" required>
 
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required>
+            
+            <label for="recordar"> Recordar mi sesión </label>      
+            <input type="checkbox" name="recordar">
 
-            <button type="submit">Entrar</button>
+            <button name="entrar" type="submit">Entrar</button>
         </form>
     </div>
-</body>
+    
+    </body>
 </html>
+

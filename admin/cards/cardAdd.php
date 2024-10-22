@@ -76,27 +76,7 @@
     // }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración</title>
-    <link rel="stylesheet" href="../assets/css/admin.css"> 
-</head>
-<body>
-<header>
-        <h1>Panel de Administración</h1>
-        <nav>
-            <ul>
-            <li><a href="../dashboard.php">Inicio</a></li>
-                <li><a href="../users/users.php">Usuarios</a></li>
-                <li><a href="./cards.php">Cartas</a></li>
-                <li><a href="../config/configuracion.php">Configuración</a></li>
-                <li><a href="../logout.php">Cerrar Sesión</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php include_once '../header.php'; ?>
 
     <main>
         <section class="dashboard-info">
@@ -129,5 +109,5 @@
         </div>
         </section>
     </main>
-</body>
-</html>
+
+<?php include_once '../footer.php'; ?>

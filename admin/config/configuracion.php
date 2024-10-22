@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/admin.css"> <!-- Archivo CSS externo -->
+    <link rel="stylesheet" href="../assets/css/admin.css"> 
     <title>Configuración del juego</title>
 </head>
 <body>
@@ -15,10 +15,12 @@
                 <li><a href="../admin/users/users.php">Usuarios</a></li>
                 <li><a href="../cards/cards.php">Cartas</a></li>
                 <li><a href="../config/configuracion.php">Configuración</a></li>
-                <li><a href="../logout.php">Cerrar Sesión</a></li>
+                <li><a href="../login.php?logout=1">Cerrar Sesión</a></li>
             </ul>
         </nav>
-    </header>
+    </header> -->
+
+    <?php include_once '../header.php'; ?>
 
     <h1>Formulario de configuración </h1>
     <form action="configuracion.php" method="post">
@@ -103,6 +105,6 @@
     }
     ?>
 
-</body>
-</html>
+<?php include_once '../footer.php'; ?>
+
 

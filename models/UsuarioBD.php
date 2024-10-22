@@ -10,6 +10,42 @@ class UsuarioBD {
         $this->conexion = $db->get_conexion(); // Creamos una variable para guardar la conexión a la BBDD
     }
 
+    public function validarLogin($email, $password) {
+        $mensajeError = null;
+    
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $passwordEncriptada = sha1($password);  // Encriptar la contraseña ingresada con sha1()
+    
+            $query = "SELECT * FROM usuarios WHERE email = :email AND password = :password";
+            $statement = $this->conexion->prepare($query);
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':password', $passwordEncriptada);
+                            
+            if ($statement->execute()) { // si la ejecución es true
+                if($statement->rowCount() > 0) { // verificar si devuelve al menos una fila
+                    $resultado = $statement->fetch(PDO::FETCH_ASSOC);
+                    $contrasenia = $resultado['password'];
+
+                    // Almacenar el email y el nickname en la sesión
+                    $_SESSION['email'] = $email; 
+                    $_SESSION['user'] = $resultado['nickname'];
+                    $_SESSION['password'] = $contrasenia;
+                    $_SESSION['logged'] = true;
+
+                    header("Location: dashboard.php");
+                    exit;
+                } else {
+                    $mensajeError = "Usuario o contraseña incorrectos.";
+                    echo $mensajeError;
+                }
+            } else {
+                $mensajeError = "Error al ejecutar la consulta.";
+                echo $mensajeError;
+            }
+        }
+    }
+    
+
     public function obtenerUsuarios() {
         $filas = []; // creamos una variable filas inicializada a null
         $sql= "SELECT * FROM usuarios";
@@ -63,6 +99,6 @@ class UsuarioBD {
         $statement->bindParam(':id', $id);
         return $statement->execute();
     }
-
 }
+
 ?>
