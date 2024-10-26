@@ -74,6 +74,13 @@ header nav ul {
     margin-top: 1rem;
 }
 
+footer {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 header nav ul li {
     margin: 0 1rem;
 }

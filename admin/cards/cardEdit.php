@@ -37,11 +37,15 @@
     }
 ?>
 
+<?php include_once '../header.php'; ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/practicas/practicaCartas/admin/assets/css/admin.css">
     <title>Editar Carta</title>
 </head>
 <body>

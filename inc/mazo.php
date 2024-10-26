@@ -17,7 +17,7 @@
                 $carta = array_shift($this->arrayCartas); 
                 return $carta; 
             } else {
-                return "no hay mas cartas";
+                return null;
             }
         }        
 

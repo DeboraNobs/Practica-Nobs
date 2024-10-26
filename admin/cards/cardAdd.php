@@ -18,9 +18,7 @@
         echo "Error: no se pudo obtener la configuración " . $e->getMessage();
     }
 
-    // Verifica si se ha enviado el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Recibe los datos del formulario
         $nombre = $_POST['nombre'];
         $ataque = $_POST['ataque'];
         $defensa = $_POST['defensa'];
@@ -28,16 +26,35 @@
         $nombreImagen = $_POST['nombreImagen'];
         $poderEspecial = $_POST['poderEspecial'];
 
+        
+        $ruta_carta = null;
+        $directorio_subida = '/Applications/MAMP/htdocs/practicas/practicaCartas/admin/uploads/imagenes/';
+    
         try {
             if ($ataque > $maxAtaque || $defensa > $maxDefensa) {
-                $mensaje = "El ataque y/o defenda no puede superar los máximos. Maximo Ataque: " . $maxAtaque .  "Maximo Defensa: " . $maxDefensa;
-            }
-            elseif ($cartaBD->insertarCartas($nombre, $ataque, $defensa, $tipo, $nombreImagen, $poderEspecial)) {
-                $mensaje = "Carta agregada correctamente.";
+                $mensaje = "El ataque y/o defensa no puede superar los máximos.";
             } else {
-                $mensaje = "Error al agregar la carta.";
+                if (!empty($_FILES['url_foto_carta']['name'])) { 
+                    $foto_carta = $_FILES['url_foto_carta'];
+                    $ruta_carta = $directorio_subida . basename($foto_carta['name']);
+                    $tipo_imagen = strtolower(pathinfo($ruta_carta, PATHINFO_EXTENSION)); 
+                    $tipos_permitidos = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+                    if (in_array($tipo_imagen, $tipos_permitidos) && $foto_carta['size'] < 3000000) {
+                        if (move_uploaded_file($foto_carta['tmp_name'], $ruta_carta)) {
+                            $mensaje = "La imagen se ha subido correctamente.";
+                        } else {
+                            $mensaje = "Hubo un error al subir la imagen.";
+                        }
+                    } else {
+                        $mensaje = "Formato de imagen no permitido o tamaño demasiado grande.";
+                    }
+                }
+    
+                $cartaBD->insertarCartas($nombre, $ataque, $defensa, $tipo, $nombreImagen, $poderEspecial, $ruta_carta);
+                $mensaje = "Carta agregada correctamente.";
             }
-
+    
         } catch (PDOException $e) {
             $mensaje = "Error: no se pudo agregar la carta. " . $e->getMessage();
         }
@@ -84,7 +101,7 @@
             <h2>Añadir Carta</h2>
             <p><?php echo $mensaje; ?></p> <!-- Mostrar el mensaje aquí -->
             
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <label for="nombre">Nombre:</label>
                 <input type="text" name="nombre" id="nombre" required>
 
@@ -102,6 +119,9 @@
 
                 <label for="poderEspecial">Poder Especial:</label>
                 <input type="text" name="poderEspecial" id="poderEspecial" required>
+
+                <label for="urlFotoCarta"> Foto de la carta: (Opcional)</label>
+                <input type="file" name="url_foto_carta" id="url_foto_carta">
 
                 <button type="submit">Añadir Carta</button>
             </form>

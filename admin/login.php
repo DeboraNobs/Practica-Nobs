@@ -41,10 +41,6 @@
         header("Location: login.php"); 
         exit;
     }
-
-    echo "<pre>Variables de sesión actuales: ";
-    print_r($_SESSION);
-    echo "</pre>";
 ?>
     <div class="login-container">
         <form action="" method="POST" class="login-form">

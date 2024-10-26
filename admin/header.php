@@ -3,17 +3,16 @@
 
     if($_SESSION['user']){
         $username = $_SESSION['user'];
+    }else {
+        if (isset($_COOKIE['user']) && isset($_COOKIE['logged']) && isset($_COOKIE['logged']) == 1 ) {
+            $_SESSION['user'] = $_COOKIE['user'];
+            $_SESSION['logged'] = $_COOKIE['logged'];
+        }
     }
 
-    if (isset($_COOKIE['user']) && isset($_COOKIE['logged']) && isset($_COOKIE['logged']) == 1 ) {
-        $_SESSION['user'] = $_COOKIE['user'];
-        $_SESSION['logged'] = $_COOKIE['logged'];
-    }
 
-    if(!$_SESSION['logged']) {
-        // $current_url = $_SERVER['REQUEST_URI'];
-        // $base_path = '/practicas/practicaCartas/admin/login.php'; 
-        header('Location: /practicas/practicaCartas/admin/login.php'); //. $base_path);
+    if(!$_SESSION['logged']) {   
+        header('Location: /practicas/practicaCartas/admin/login.php');
         exit();
     }
 ?>

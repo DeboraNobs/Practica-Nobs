@@ -44,7 +44,6 @@ class UsuarioBD {
             }
         }
     }
-    
 
     public function obtenerUsuarios() {
         $filas = []; // creamos una variable filas inicializada a null
@@ -58,9 +57,9 @@ class UsuarioBD {
         return $filas;
     }
 
-    public function insertarUsuario($nickname, $email, $password) {
-        $sql = "INSERT INTO usuarios (nickname, email, password)
-                VALUES (:nickname, :email, :password)";
+    public function insertarUsuario($nickname, $email, $password, $foto_perfil = null) {
+        $sql = "INSERT INTO usuarios (nickname, email, password, foto_perfil)
+                VALUES (:nickname, :email, :password, :foto_perfil)";
 
         $statement = $this->conexion->prepare($sql); // preparo la consulta para ser ejecutada
 
@@ -68,6 +67,7 @@ class UsuarioBD {
         $statement->bindParam(':nickname', $nickname);
         $statement->bindParam(':email', $email);
         $statement->bindParam(':password', $password);
+        $statement->bindParam(':foto_perfil', $foto_perfil); // nuevo: agrega la url de la foto de perfil
 
         if($statement->execute()) {
             return true;

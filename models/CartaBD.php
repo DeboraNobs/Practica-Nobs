@@ -35,9 +35,9 @@ class CartaBD {
         return $cartas;
     }
 
-    public function insertarCartas($nombre, $ataque, $defensa, $tipo, $nombreImagen, $poderEspecial) {
-        $sqlInsertar = 'INSERT INTO cartas(nombre, ataque, defensa, tipo, nombreImagen, poderEspecial) 
-                    VALUES(:nombre, :ataque, :defensa, :tipo, :nombreImagen, :poderEspecial)';
+    public function insertarCartas($nombre, $ataque, $defensa, $tipo, $nombreImagen, $poderEspecial, $url_foto_carta) {
+        $sqlInsertar = 'INSERT INTO cartas(nombre, ataque, defensa, tipo, nombreImagen, poderEspecial, url_foto_carta) 
+                    VALUES(:nombre, :ataque, :defensa, :tipo, :nombreImagen, :poderEspecial, :url_foto_carta)';
         $statement = $this->conexion->prepare($sqlInsertar);
         
         $statement->bindParam(':nombre', $nombre);
@@ -46,6 +46,7 @@ class CartaBD {
         $statement->bindParam(':tipo', $tipo);
         $statement->bindParam(':nombreImagen', $nombreImagen);
         $statement->bindParam(':poderEspecial', $poderEspecial);
+        $statement->bindParam(':url_foto_carta', $url_foto_carta);
 
         if ($statement->execute()) {
             return true;

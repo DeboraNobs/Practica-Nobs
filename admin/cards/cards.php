@@ -6,6 +6,7 @@
     if ($conexion) {    // si la conexión es exitosa..
         $cartaBD = new CartaBD($conexion);
         $cartas = $cartaBD->obtenerCartas();
+        $totalCartas = count($cartas);
     } else {
         die ("No se pudo conectar a la base de datos.");
     }
@@ -23,8 +24,8 @@
 
     <h1>Gestión de Cartas</h1>
     <a href="cardAdd.php">Añadir Carta</a>
-    <p>Numero de cartas: </p>
-    <table>
+    <p>Numero de cartas: <?php echo $totalCartas?> </p>
+    <table border="2px" style="margin-left: auto; margin-right: auto; width: 80%; border-collapse: collapse;">
         <thead>
             <tr>
                 <th>Nombre</th>
