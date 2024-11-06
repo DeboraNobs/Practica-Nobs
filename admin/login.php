@@ -9,7 +9,7 @@
 <body>
 
 <?php 
-    require_once '../models/UsuarioBD.php'; 
+    require_once '../admin/models/UsuarioBD.php'; 
     session_start();
     $usuarioBD = new UsuarioBD();
 
@@ -20,7 +20,7 @@
             $password = $_POST['password'];
 
             $usuarioBD->validarLogin($email, $password);        // uso $email y $password para validar si existe el usuario en la BBDD
-   
+            
             if (isset($_POST['recordar'])) {                   // si el cliente le da al checkbox "recordar" creará dos coockies, (user y logged)
                 setcookie('user', $email, time() + (86400 * 30), "/");  // guarda el user con el => email
                 setcookie('logged', true, time() + (86400 * 30), "/");  

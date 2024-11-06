@@ -1,5 +1,6 @@
 <?php
     require_once '/Applications/MAMP/htdocs/practicas/practicaCartas/config/Conexion.php';
+    // require_once __DIR__ . '/../config/Conexion.php';
 
 class CartaBD {
     private $conexion;

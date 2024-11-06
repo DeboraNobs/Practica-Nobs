@@ -1,43 +1,4 @@
-<?php
-    require_once '../../models/CartaBD.php';
-
-    $bd = new CartaBD();
-
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-
-        $cartaObtenidaPorId = $bd->obtenerCartaPorID($id);
-        if (!$cartaObtenidaPorId) {
-            die('Carta no obtenida por ID');
-        }
-         // Inicializa variables para el formulario tomando los valores originales de la carta
-        $nombre = $cartaObtenidaPorId['nombre'];
-        $ataque = $cartaObtenidaPorId['ataque'];
-        $defensa = $cartaObtenidaPorId['defensa'];
-        $tipo = $cartaObtenidaPorId['tipo'];
-        $nombreImagen = $cartaObtenidaPorId['nombreImagen'];
-        $poderEspecial = $cartaObtenidaPorId['poderEspecial'];
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if(!empty($_POST['nombre']) && !empty($_POST['ataque']) && !empty($_POST['defensa']) && !empty($_POST['tipo']) 
-                && !empty($_POST['nombreImagen']) && !empty($_POST['poderEspecial'])) {
-                    $nombre = $_POST['nombre'];
-                    $ataque = $_POST['ataque'];
-                    $defensa = $_POST['defensa'];
-                    $tipo = $_POST['tipo'];
-                    $nombreImagen = $_POST['nombreImagen'];
-                    $poderEspecial = $_POST['poderEspecial'];
-
-                    $bd->actualizarCarta($id, $nombre, $ataque, $defensa, $tipo, $nombreImagen, $poderEspecial);
-                    header('Location: cards.php');
-            } else {    
-                echo "Todos los campos deben completarse";
-            }
-        }
-    }
-?>
-
-<?php include_once '../header.php'; ?>
+<?php include_once __DIR__ . '../../../header.php'; ?>
 
 
 <!DOCTYPE html>
@@ -50,6 +11,7 @@
 </head>
 <body>
     <h1>Editar Carta</h1>
+    
     <form action="" method="POST">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" value="<?php echo isset($cartaObtenidaPorId['nombre']) ? $cartaObtenidaPorId['nombre'] : ''; ?>" >
@@ -72,4 +34,4 @@
         <input type="submit" value="Actualizar Carta">
     </form>
     
-<?php include_once '../footer.php'; ?>
+<?php include_once __DIR__ . '../../../footer.php';?>

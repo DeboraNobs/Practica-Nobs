@@ -1,31 +1,13 @@
 <?php
-    require_once '../../models/CartaBD.php';
-
-    $conexion = (new Conexion())->get_conexion();
-
-    if ($conexion) {    // si la conexión es exitosa..
-        $cartaBD = new CartaBD($conexion);
-        $cartas = $cartaBD->obtenerCartas();
-        $totalCartas = count($cartas);
-    } else {
-        die ("No se pudo conectar a la base de datos.");
-    }
-
-    // para eliminar cartas
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-
-        $cartaEliminada = $cartaBD->eliminarCarta($id);
-        header('Location: cards.php');
-    }
+    require_once '/Applications/MAMP/htdocs/practicas/practicaCartas/admin/models/CartaBD.php';
+    include_once __DIR__ . '../../../header.php';
 ?>
 
-<?php include_once '../header.php'; ?>
-
     <h1>Gestión de Cartas</h1>
-    <a href="cardAdd.php">Añadir Carta</a>
+    <a href="/practicas/practicaCartas/index.php?controller=card&action=agregarCartas">Añadir Carta</a>
     <p>Numero de cartas: <?php echo $totalCartas?> </p>
-    <table border="2px" style="margin-left: auto; margin-right: auto; width: 80%; border-collapse: collapse;">
+  <table border="2px" style="margin-left: auto; margin-right: auto; width: 80%; border-collapse: collapse;">
+       
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -37,6 +19,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
+
         <tbody>
             <?php foreach ($cartas as $carta): ?>
                 <tr>
@@ -47,12 +30,13 @@
                     <td><?php echo $carta['nombreImagen']; ?></td>
                     <td><?php echo $carta['poderEspecial']; ?></td>
                     <td>
-                        <a href="cardEdit.php?id=<?php echo $carta['id']; ?>">Editar</a> |
-                        <a href="cards.php?id=<?php echo $carta['id']; ?>">Eliminar</a> |
+                        <a href="/practicas/practicaCartas/index.php?controller=card&action=editarCartas&id=<?php echo $carta['id'];?>">Editar</a> |
+                        <a href="/practicas/practicaCartas/index.php?controller=card&action=eliminarCarta&id=<?php echo $carta['id']; ?>">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
+
     </table>
 
-<?php include_once '../footer.php'; ?>
+<?php include_once __DIR__ . '../../../footer.php'; ?>

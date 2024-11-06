@@ -1,21 +1,10 @@
 <?php
-    // require_once '/Applications/MAMP/htdocs/practicas/practicaCartas/models/UsuarioBD.php';
     require_once __DIR__ . '../../../models/UsuarioBD.php';
-    require_once __DIR__ . '/../header.php';
-
-    $conexion = (new Conexion())->get_conexion();     // Obtener la conexión
-
-    if ($conexion) { // Si la conexión es exitosa..
-        $usuarioBD = new UsuarioBD($conexion);
-        $usuarios = $usuarioBD->obtenerUsuarios();
-    } else {
-        die ("No se pudo conectar a la base de datos.");
-    }
+    require_once __DIR__ . '../../../header.php';
 ?>
 
-
     <h1>Gestión de Usuarios</h1>
-    <a href="userAdd.php">Añadir Usuario</a>
+    <a href="/practicas/practicaCartas/index.php?controller=user&action=agregarUsuarios">Añadir Usuario</a>
     
     <table border="2px" style="margin-left: auto; margin-right: auto; width: 80%; border-collapse: collapse;">
         <thead>
@@ -35,12 +24,12 @@
                         <td><?php echo $usuario['email']; ?></td>
                         <td><?php echo $usuario['foto_perfil']; ?></td>
                         <td>
-                            <a href="userEdit.php?id=<?php echo $usuario['id']; ?>">Editar</a> |
-                            <a href="userDelete.php?id=<?php echo $usuario['id']; ?>">Eliminar</a>
+                            <a href="/practicas/practicaCartas/index.php?controller=user&action=editarUsuarios&id=<?php echo $usuario['id'];?>">Editar</a> |
+                            <a href="/practicas/practicaCartas/index.php?controller=user&action=eliminarUsuarios&id=<?php echo $usuario['id']; ?>">Eliminar</a>
                         </td>
                     </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
-<?php require_once __DIR__ . '/../footer.php'; ?>
+<?php require_once __DIR__ . '../../../footer.php'; ?>

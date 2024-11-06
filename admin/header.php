@@ -1,6 +1,7 @@
 <?php
-    session_start();
-
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if($_SESSION['user']){
         $username = $_SESSION['user'];
     }else {
@@ -9,7 +10,6 @@
             $_SESSION['logged'] = $_COOKIE['logged'];
         }
     }
-
 
     if(!$_SESSION['logged']) {   
         header('Location: /practicas/practicaCartas/admin/login.php');
@@ -31,10 +31,11 @@
         <h1>Panel de Administración</h1>
         <nav>
             <ul>
-                <li><a href="/practicas/practicaCartas/admin/dashboard.php">Inicio</a></li>
-                <li><a href="/practicas/practicaCartas/admin/users/users.php">Usuarios</a></li>
-                <li><a href="/practicas/practicaCartas/admin/cards/cards.php">Cartas</a></li>
+                <li><a href="/practicas/practicaCartas/index.php?controller=Dashboard&action=cargarInicio">Inicio</a></li>
+                <li><a href="/practicas/practicaCartas/index.php?controller=user&action=listarUsuarios">Usuarios</a></li>
+                <li><a href="/practicas/practicaCartas/index.php?controller=card&action=listarCartas">Cartas</a></li>
                 <li><a href="/practicas/practicaCartas/admin/config/configuracion.php">Configuración</a></li>
+                <li><a href="/practicas/practicaCartas/admin/views/cards/generar_pdf_cartas.php" target="_blank"> Informe Cartas </a></li>
                 <li><a href="/practicas/practicaCartas/admin/login.php?logout=1">Hola <?php echo $username ?> (Cerrar Sesión)</a></li>
             </ul>
         </nav>

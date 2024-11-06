@@ -60,21 +60,14 @@ body {
 }
 
 /* Dashboard Page Styles */
-header {
+header, footer {
     background-color: #007bff;
     color: white;
     padding: 1rem;
     text-align: center;
 }
 
-header nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-footer {
+header nav ul, footer {
     list-style: none;
     display: flex;
     justify-content: center;

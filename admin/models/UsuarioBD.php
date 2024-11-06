@@ -1,7 +1,6 @@
 <?php 
-    // require_once '/Applications/MAMP/htdocs/practicas/practicaCartas/config/Conexion.php';
-    require_once __DIR__ . '/../config/Conexion.php';
-
+    require_once '/Applications/MAMP/htdocs/practicas/practicaCartas/config/Conexion.php';
+    // require_once __DIR__ . '/../config/Conexion.php';
 class UsuarioBD {
     private $conexion;
 
@@ -32,7 +31,8 @@ class UsuarioBD {
                     $_SESSION['password'] = $contrasenia;
                     $_SESSION['logged'] = true;
 
-                    header("Location: dashboard.php");
+                    //header("Location: dashboard.php");
+                    header("Location: /practicas/practicaCartas/index.php?controller=Dashboard&action=cargarInicio");
                     exit;
                 } else {
                     $mensajeError = "Usuario o contraseña incorrectos.";
